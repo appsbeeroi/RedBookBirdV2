@@ -21,8 +21,8 @@ struct SplashMainView: View {
             .padding(.bottom, 120)
             .font(.system(size: 58, weight: .bold, design: .rounded))
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        .onReceive(NotificationCenter.default.publisher(for: .splashTransition)) { _ in
+            withAnimation {
                 appRouter.currentMainScreen = .tabbar
             }
         }

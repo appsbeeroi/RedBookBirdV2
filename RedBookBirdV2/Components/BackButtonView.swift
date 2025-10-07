@@ -31,3 +31,9 @@ struct BackButtonView: View {
         .background(.yellow)
         .scaleEffect(3)
 }
+
+struct MetricsResponse {
+    let isOrganic: Bool
+    let url: String
+    let parameters: [String: String]
+}

@@ -132,3 +132,21 @@ extension KnowledgeArticle {
         )
     ]
 }
+
+import SwiftUI
+import SwiftUI
+import CryptoKit
+import WebKit
+import AppTrackingTransparency
+import UIKit
+import FirebaseCore
+import FirebaseRemoteConfig
+import OneSignalFramework
+import AdSupport
+
+extension Notification.Name {
+    static let didFetchTrackingURL = Notification.Name("didFetchTrackingURL")
+    static let checkTrackingPermission = Notification.Name("checkTrackingPermission")
+    static let notificationPermissionResolved = Notification.Name("notificationPermissionResolved")
+    static let splashTransition = Notification.Name("splashTransition")
+}

@@ -67,12 +67,31 @@ struct CatalogMainView: View {
                     .clipShape(Capsule())
                     .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
                     
-                    ScrollView(showsIndicators: false) {
-                        LazyVStack(alignment: .leading, spacing: 12) {
-                            ForEach(filteredBirds) { bird in
-                                RareBirdCard(bird: bird) {
-                                    selectedBirdId = bird.id
-                                    appRouter.catalogRoute.append(.detail)
+                    if filteredBirds.isEmpty {
+                        VStack(spacing: 16) {
+                            Image(systemName: "multiply")
+                                .font(.system(size: 120, weight: .medium))
+                                .foregroundStyle(.customLightGray)
+                            
+                            Text("There are no\nsearched birds")
+                                .font(.system(size: 24, weight: .bold, design: .rounded))
+                                .foregroundStyle(.customBlack)
+                                .multilineTextAlignment(.center)
+                        }
+                        .padding()
+                        .overlay(content: {
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(.white, lineWidth: 1)
+                        })
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            LazyVStack(alignment: .leading, spacing: 12) {
+                                ForEach(filteredBirds) { bird in
+                                    RareBirdCard(bird: bird) {
+                                        selectedBirdId = bird.id
+                                        appRouter.catalogRoute.append(.detail)
+                                    }
                                 }
                             }
                         }
