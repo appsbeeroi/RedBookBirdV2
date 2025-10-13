@@ -9,6 +9,8 @@ struct SettingsMainView: View {
     
     @State private var urlString: String?
     
+    @State private var isShowRemoveAlert = false
+    
     var body: some View {
         ZStack(alignment: .center) {
             BackGroundView()
@@ -35,6 +37,14 @@ struct SettingsMainView: View {
                         )
                     )
                     
+                    SettingsRowView(
+                        title: "Remove all the data",
+                        action: {
+                            isShowRemoveAlert.toggle()
+                        },
+                        trailingContent: AnyView(Image(systemName: "multiply").foregroundStyle(.red))
+                    )
+                    
                     // About the application
                     SettingsRowView(
                         title: "About the application",
@@ -55,37 +65,6 @@ struct SettingsMainView: View {
                     )
                 }
                 
-                //                    // Action buttons
-                //                    HStack(spacing: 16) {
-                //                        // Import button
-                //                        Button(action: {
-                //                            settingsService.importData()
-                //                        }) {
-                //                            Text("Import")
-                //                                .font(.customFont(font: .regular, size: 22))
-                //                                .foregroundStyle(.white)
-                //                                .frame(maxWidth: .infinity)
-                //                                .padding(.vertical, 16)
-                //                                .background(Color.blue)
-                //                                .clipShape(RoundedRectangle(cornerRadius: 22))
-                //                        }
-                //                        .buttonStyle(.plain)
-                //
-                //                        // Export button
-                //                        Button(action: {
-                //                            settingsService.exportData()
-                //                        }) {
-                //                            Text("Export")
-                //                                .font(.customFont(font: .regular, size: 22))
-                //                                .foregroundStyle(.white)
-                //                                .frame(maxWidth: .infinity)
-                //                                .padding(.vertical, 16)
-                //                                .background(Color.green)
-                //                                .clipShape(RoundedRectangle(cornerRadius: 22))
-                //                        }
-                //                        .buttonStyle(.plain)
-                //                    }
-                
                 Spacer()
             }
             .padding(.horizontal, 20)
@@ -97,6 +76,11 @@ struct SettingsMainView: View {
                     tabbarService.isTabbarVisible = true
                 }
                 .ignoresSafeArea(edges: [.bottom])
+            }
+        }
+        .alert("Are you sure you want to delete all the data?", isPresented: $isShowRemoveAlert) {
+            Button("Yes", role: .destructive) {
+                ObservationService.shared.removeAll()
             }
         }
         .alert("The permission denied. Open Settings?", isPresented: $settingsService.isCancelled) {

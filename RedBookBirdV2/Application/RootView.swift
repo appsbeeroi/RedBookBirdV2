@@ -15,7 +15,7 @@ struct RootView: View {
         }
         .onAppear {
             Task {
-                await SettingsService.shared.setNotifications(enabled: true)
+                await SettingsService.shared.requestAuthorizationIfNeeded()
             }
         }
     }

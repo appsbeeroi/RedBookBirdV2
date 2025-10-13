@@ -11,13 +11,14 @@ final class SettingsService: ObservableObject {
     static let shared = SettingsService()
     
     @Published var isCancelled = false
+    
     private init() {
         loadSettings()
     }
     
     // MARK: - Published Properties
     
-    @Published var isNotificationsEnabled: Bool = true
+    @Published var isNotificationsEnabled: Bool = false
     
     // MARK: - Private Properties
     
@@ -93,7 +94,7 @@ final class SettingsService: ObservableObject {
     }
 
     // MARK: - Notifications
-    private func requestAuthorizationIfNeeded() async -> Bool {
+    func requestAuthorizationIfNeeded() async -> Bool {
         let center = UNUserNotificationCenter.current()
         let settings = await center.notificationSettings()
         switch settings.authorizationStatus {

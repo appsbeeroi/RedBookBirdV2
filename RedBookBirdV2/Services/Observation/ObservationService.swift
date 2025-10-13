@@ -5,7 +5,9 @@ import SwiftUI
 
 @MainActor
 final class ObservationService: ObservableObject {
+    
     static let shared = ObservationService()
+    
     private init() {
         loadObservations()
     }
@@ -38,6 +40,11 @@ final class ObservationService: ObservableObject {
     
     var hasObservations: Bool {
         !observations.isEmpty
+    }
+    
+    func removeAll() {
+        UserDefaults.standard.removeObject(forKey: storageKey)
+        observations = []
     }
     
     // MARK: - Persistence
